@@ -264,3 +264,5 @@ if __name__ == '__main__':
 	lcd.message("  Adafruit 16x2\n  Standard LCD")
     except KeyboardInterrupt:
 	lcd.exit();
+    finally:
+	lcd.exit();
