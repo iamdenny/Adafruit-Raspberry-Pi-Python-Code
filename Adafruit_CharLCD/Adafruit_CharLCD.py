@@ -88,7 +88,7 @@ class Adafruit_CharLCD:
 		self.write4bits(self.LCD_ENTRYMODESET | self.displaymode) #  set the entry mode
 	
         	self.clear()
-    	except KeyboardInterrupt:
+    	except:
     		GPIO.cleanup()
 
 
