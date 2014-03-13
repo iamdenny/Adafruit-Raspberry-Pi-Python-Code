@@ -57,39 +57,36 @@ class Adafruit_CharLCD:
     def __init__(self, pin_rs=25, pin_e=24, pins_db=[23, 17, 21, 22], GPIO = None):
 	# Emulate the old behavior of using RPi.GPIO if we haven't been given
 	# an explicit GPIO interface to use
-	try:
-		if not GPIO:
-		    import RPi.GPIO as GPIO
-	   	self.GPIO = GPIO
-	        self.pin_rs = pin_rs
-	        self.pin_e = pin_e
-	        self.pins_db = pins_db
-	
-	        self.GPIO.setmode(GPIO.BCM)
-	        self.GPIO.setup(self.pin_e, GPIO.OUT)
-	        self.GPIO.setup(self.pin_rs, GPIO.OUT)
-	
-	        for pin in self.pins_db:
-	            self.GPIO.setup(pin, GPIO.OUT)
-	
-		self.write4bits(0x33) # initialization
-		self.write4bits(0x32) # initialization
-		self.write4bits(0x28) # 2 line 5x7 matrix
-		self.write4bits(0x0C) # turn cursor off 0x0E to enable cursor
-		self.write4bits(0x06) # shift cursor right
-	
-		self.displaycontrol = self.LCD_DISPLAYON | self.LCD_CURSOROFF | self.LCD_BLINKOFF
-	
-		self.displayfunction = self.LCD_4BITMODE | self.LCD_1LINE | self.LCD_5x8DOTS
-		self.displayfunction |= self.LCD_2LINE
-	
-		""" Initialize to default text direction (for romance languages) """
-		self.displaymode =  self.LCD_ENTRYLEFT | self.LCD_ENTRYSHIFTDECREMENT
-		self.write4bits(self.LCD_ENTRYMODESET | self.displaymode) #  set the entry mode
-	
-        	self.clear()
-    	finally:
-    		GPIO.cleanup()
+	if not GPIO:
+	    import RPi.GPIO as GPIO
+   	self.GPIO = GPIO
+        self.pin_rs = pin_rs
+        self.pin_e = pin_e
+        self.pins_db = pins_db
+
+        self.GPIO.setmode(GPIO.BCM)
+        self.GPIO.setup(self.pin_e, GPIO.OUT)
+        self.GPIO.setup(self.pin_rs, GPIO.OUT)
+
+        for pin in self.pins_db:
+            self.GPIO.setup(pin, GPIO.OUT)
+
+	self.write4bits(0x33) # initialization
+	self.write4bits(0x32) # initialization
+	self.write4bits(0x28) # 2 line 5x7 matrix
+	self.write4bits(0x0C) # turn cursor off 0x0E to enable cursor
+	self.write4bits(0x06) # shift cursor right
+
+	self.displaycontrol = self.LCD_DISPLAYON | self.LCD_CURSOROFF | self.LCD_BLINKOFF
+
+	self.displayfunction = self.LCD_4BITMODE | self.LCD_1LINE | self.LCD_5x8DOTS
+	self.displayfunction |= self.LCD_2LINE
+
+	""" Initialize to default text direction (for romance languages) """
+	self.displaymode =  self.LCD_ENTRYLEFT | self.LCD_ENTRYSHIFTDECREMENT
+	self.write4bits(self.LCD_ENTRYMODESET | self.displaymode) #  set the entry mode
+
+	self.clear()
 
 
     def begin(self, cols, lines):
@@ -253,6 +250,9 @@ class Adafruit_CharLCD:
                 self.write4bits(0xC0) # next line
             else:
                 self.write4bits(ord(char),True)
+                
+    def exit(self):
+    	self.GPIO.cleanup();
 
 
 if __name__ == '__main__':
@@ -261,4 +261,4 @@ if __name__ == '__main__':
 
     lcd.clear()
     lcd.message("  Adafruit 16x2\n  Standard LCD")
-
+    lcd.exit();
