@@ -87,8 +87,8 @@ class Adafruit_CharLCD:
 		self.displaymode =  self.LCD_ENTRYLEFT | self.LCD_ENTRYSHIFTDECREMENT
 		self.write4bits(self.LCD_ENTRYMODESET | self.displaymode) #  set the entry mode
 	
-        self.clear()
-    finally: GPIO.cleanup()
+        	self.clear()
+    	finally: GPIO.cleanup()
 
 
     def begin(self, cols, lines):
