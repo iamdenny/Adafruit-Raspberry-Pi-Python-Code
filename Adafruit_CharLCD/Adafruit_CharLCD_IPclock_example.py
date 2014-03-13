@@ -16,9 +16,15 @@ def run_cmd(cmd):
         output = p.communicate()[0]
         return output
 
-while 1:
-	lcd.clear()
-	ipaddr = run_cmd(cmd)
-	lcd.message(datetime.now().strftime('%b %d  %H:%M:%S\n'))
-	lcd.message('IP %s' % ( ipaddr ) )
-	sleep(2)
+try:
+	
+	while 1:
+		lcd.clear()
+		ipaddr = run_cmd(cmd)
+		lcd.message(datetime.now().strftime('%b %d  %H:%M:%S\n'))
+		lcd.message('IP %s' % ( ipaddr ) )
+		sleep(2)
+except KeyboardInterrupt: 
+	lcd.exit()
+finally:
+	lcd.exit()
