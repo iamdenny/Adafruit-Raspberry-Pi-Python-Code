@@ -26,5 +26,3 @@ try:
 		sleep(2)
 except KeyboardInterrupt: 
 	lcd.exit()
-finally:
-	lcd.exit()
