@@ -257,8 +257,10 @@ class Adafruit_CharLCD:
 
 if __name__ == '__main__':
 
-    lcd = Adafruit_CharLCD()
-
-    lcd.clear()
-    lcd.message("  Adafruit 16x2\n  Standard LCD")
-    lcd.exit();
+    try:
+	lcd = Adafruit_CharLCD()
+	
+	lcd.clear()
+	lcd.message("  Adafruit 16x2\n  Standard LCD")
+    except KeyboardInterrupt:
+	lcd.exit();
